@@ -1,19 +1,7 @@
 package main
 
-import (
-    "bufio"
-    "fmt"
-    "os"
-)
+import "github.com/maxmanuylov/envexp/boot"
 
 func main() {
-    stdin := bufio.NewReader(os.Stdin)
-
-    readLine := func() error {
-        line, err := stdin.ReadString('\n')
-        fmt.Fprint(os.Stdout, os.ExpandEnv(line))
-        return err
-    }
-
-    for readLine() == nil {}
+    boot.Run()
 }
