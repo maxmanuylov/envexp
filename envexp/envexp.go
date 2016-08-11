@@ -7,14 +7,12 @@ import (
     "os"
 )
 
-func ExpandStream(reader io.Reader, writer io.Writer) {
-    bufReader := bufio.NewReader(reader)
+func ExpandStream(reader io.Reader, writer io.Writer) error {
+    lineScanner := bufio.NewScanner(reader)
 
-    readLine := func() error {
-        line, err := bufReader.ReadString('\n')
-        fmt.Fprint(writer, os.ExpandEnv(line))
-        return err
+    for lineScanner.Scan() {
+        fmt.Fprintln(writer, os.ExpandEnv(lineScanner.Text()))
     }
 
-    for readLine() == nil {}
+    return lineScanner.Err()
 }
