@@ -7,11 +7,15 @@ import (
     "os"
 )
 
-func ExpandStream(reader io.Reader, writer io.Writer) error {
+func ExpandStream(reader io.Reader, writer io.Writer, expand bool) error {
     lineScanner := bufio.NewScanner(reader)
 
     for lineScanner.Scan() {
-        fmt.Fprintln(writer, os.ExpandEnv(lineScanner.Text()))
+        if expand {
+            fmt.Fprintln(writer, os.ExpandEnv(lineScanner.Text()))
+        } else {
+            fmt.Fprintln(writer, lineScanner.Text())
+        }
     }
 
     return lineScanner.Err()

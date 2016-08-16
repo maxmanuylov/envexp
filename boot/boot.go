@@ -7,7 +7,7 @@ import (
 )
 
 func Run() {
-    if err := envexp.ExpandStream(os.Stdin, os.Stdout); err != nil {
+    if err := envexp.ExpandStream(os.Stdin, os.Stdout, true); err != nil {
         application.Exit(err.Error())
     }
 }
